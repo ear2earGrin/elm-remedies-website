@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Elm Remedies — Integrative Medicine & Wellness</title>
+  <title>Elemental Remedies — Integrative Medicine & Wellness</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
@@ -462,6 +462,77 @@
     }
     .form-submit:hover { background: var(--forest-dark); transform: translateY(-1px); }
 
+    /* ── FIVE ELEMENTS STRIP ── */
+    #elements {
+      background: var(--white);
+      padding: 60px 6%;
+      border-top: 1px solid var(--cream-dark);
+      border-bottom: 1px solid var(--cream-dark);
+    }
+    .elements-header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+    .elements-subtitle {
+      font-size: 0.83rem;
+      color: var(--text-muted);
+      margin-top: 0.3rem;
+      font-style: italic;
+      letter-spacing: 0.3px;
+    }
+    .elements-grid {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .element-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.7rem;
+      padding: 1.6rem 1.4rem;
+      background: var(--cream);
+      border-radius: 16px;
+      flex: 1;
+      min-width: 130px;
+      max-width: 160px;
+      transition: transform 0.3s, box-shadow 0.3s;
+      cursor: default;
+      border: 1.5px solid transparent;
+    }
+    .element-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 32px rgba(28,92,71,0.1);
+      border-color: rgba(28,92,71,0.12);
+      background: var(--white);
+    }
+    .element-symbol {
+      font-size: 2rem;
+      line-height: 1;
+    }
+    .element-name-sanskrit {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--forest);
+    }
+    .element-name-en {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 600;
+    }
+    .element-quality {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      text-align: center;
+      line-height: 1.5;
+    }
+
     /* ── FOOTER ── */
     footer { background: var(--forest-dark); color: rgba(255,255,255,0.65); padding: 3rem 6%; }
     .footer-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem; }
@@ -503,7 +574,7 @@
 
   <!-- NAV -->
   <nav id="navbar">
-    <a href="#hero" class="nav-logo">Elm<span>Remedies</span></a>
+    <a href="#hero" class="nav-logo">Elemental<span> Remedies</span></a>
     <ul class="nav-links">
       <li><a href="#about">About</a></li>
       <li><a href="#services">Services</a></li>
@@ -522,7 +593,7 @@
       <div class="hero-content">
         <div class="hero-badge reveal">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.86L12 17.77l-6.18 3.23 1.18-6.86L2 9.27l6.91-1.01L12 2z"/></svg>
-          Integrative Medicine &amp; Holistic Wellness
+          Rooted in the Five Elements · Integrative Medicine
         </div>
         <h1 class="hero-title reveal reveal-delay-1">
           Healing the Whole <em>Person,</em><br/>Not Just the Symptom
@@ -552,7 +623,7 @@
 
       <div class="hero-photo-wrap reveal-right">
         <div class="hero-photo-frame">
-          <img src="images/doctor-formal.png" alt="Dr. Vikram Bhullar — Elm Remedies" />
+          <img src="images/doctor-formal.png" alt="Dr. Vikram Bhullar — Elemental Remedies" />
         </div>
         <div class="hero-photo-card">
           <div class="card-label">Specialist in</div>
@@ -593,7 +664,7 @@
           <div class="about-photo-bg"></div>
           <div class="about-gold-line"></div>
           <div class="about-photo-frame">
-            <img src="images/doctor-casual.png" alt="Dr. Vikram Bhullar — Elm Remedies" />
+            <img src="images/doctor-casual.png" alt="Dr. Vikram Bhullar — Elemental Remedies" />
           </div>
           <div class="about-photo-strip">
             <div class="strip-dot">
@@ -612,7 +683,7 @@
             With over 15 years of clinical experience, Dr. Vikram Bhullar brings a deeply personalised, evidence-based approach to medicine. Trained in both conventional rehabilitation medicine and classical Ayurveda, he bridges the gap between East and West — offering patients a comprehensive path to lasting wellness.
           </p>
           <p class="about-bio">
-            His practice, Elm Remedies, was founded on a simple belief: true healing happens when we address the body, mind, and spirit together. Every consultation is an opportunity to uncover the root cause of illness — not merely suppress its symptoms.
+            His practice, Elemental Remedies, was founded on a simple belief: true healing happens when we address the body, mind, and spirit together. Every consultation is an opportunity to uncover the root cause of illness — not merely suppress its symptoms.
           </p>
           <ul class="credentials-list">
             <li>MBBS — Bachelor of Medicine & Surgery</li>
@@ -837,7 +908,7 @@
               </div>
               <div>
                 <div class="contact-item-label">Email</div>
-                <div class="contact-item-value">info@elmremedies.com</div>
+                <div class="contact-item-value">info@elementalremedies.com</div>
               </div>
             </div>
             <div class="contact-item">
@@ -905,12 +976,54 @@
     </div>
   </section>
 
+  <!-- FIVE ELEMENTS -->
+  <section id="elements">
+    <div class="section-inner">
+      <div class="elements-header reveal">
+        <div class="section-tag">The Foundation of Ayurveda</div>
+        <div class="elements-subtitle">Pancha Mahabhutas — the five great elements that constitute all life</div>
+      </div>
+      <div class="elements-grid">
+        <div class="element-card reveal reveal-delay-1">
+          <div class="element-symbol">🌍</div>
+          <div class="element-name-sanskrit">Prithvi</div>
+          <div class="element-name-en">Earth</div>
+          <div class="element-quality">Stability · Structure · Nourishment</div>
+        </div>
+        <div class="element-card reveal reveal-delay-2">
+          <div class="element-symbol">💧</div>
+          <div class="element-name-sanskrit">Jala</div>
+          <div class="element-name-en">Water</div>
+          <div class="element-quality">Flow · Adaptability · Cohesion</div>
+        </div>
+        <div class="element-card reveal reveal-delay-3">
+          <div class="element-symbol">🔥</div>
+          <div class="element-name-sanskrit">Agni</div>
+          <div class="element-name-en">Fire</div>
+          <div class="element-quality">Transformation · Digestion · Radiance</div>
+        </div>
+        <div class="element-card reveal reveal-delay-4">
+          <div class="element-symbol">🌬️</div>
+          <div class="element-name-sanskrit">Vayu</div>
+          <div class="element-name-en">Air</div>
+          <div class="element-quality">Movement · Breath · Vitality</div>
+        </div>
+        <div class="element-card reveal reveal-delay-4">
+          <div class="element-symbol">✨</div>
+          <div class="element-name-sanskrit">Akasha</div>
+          <div class="element-name-en">Ether</div>
+          <div class="element-quality">Space · Consciousness · Expansion</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- FOOTER -->
   <footer>
     <div class="footer-inner">
       <div>
-        <div class="footer-logo">Elm<span>Remedies</span></div>
-        <div class="footer-tagline">Integrative Medicine · Ayurveda · Nutrition · Rehabilitation</div>
+        <div class="footer-logo">Elemental<span> Remedies</span></div>
+        <div class="footer-tagline">Rooted in the Five Elements · Integrative Medicine · Ayurveda · Nutrition · Rehabilitation</div>
       </div>
       <ul class="footer-links">
         <li><a href="#about">About</a></li>
@@ -919,7 +1032,7 @@
         <li><a href="#conditions">Conditions</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
-      <div class="footer-copy">© 2026 Elm Remedies. All rights reserved.</div>
+      <div class="footer-copy">© 2026 Elemental Remedies. All rights reserved.</div>
     </div>
   </footer>
 
