@@ -166,14 +166,10 @@
       border-radius: 20px;
       overflow: hidden;
       box-shadow: 0 30px 80px rgba(0,0,0,0.4);
-      /* Give the photo a tinted overlay to blend the white bg */
-      background: #1e6b53;
+      background: var(--white);
     }
     .hero-photo-frame img {
       width: 100%; display: block;
-      /* Blend white bg into the green behind it */
-      mix-blend-mode: multiply;
-      filter: contrast(1.04) brightness(0.98);
     }
 
     /* Floating info card */
