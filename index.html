@@ -1,0 +1,1208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Elm Remedies — Integrative Medicine & Wellness</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --forest: #1c5c47;
+      --forest-dark: #143d2f;
+      --forest-light: #2a7a5e;
+      --gold: #b8954a;
+      --gold-light: #d4aa6a;
+      --cream: #f7f4ef;
+      --cream-dark: #ede9e0;
+      --text: #2c2c2c;
+      --text-muted: #6b6b6b;
+      --white: #ffffff;
+      --radius: 12px;
+      --shadow: 0 4px 24px rgba(0,0,0,0.08);
+      --shadow-lg: 0 12px 48px rgba(0,0,0,0.12);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      color: var(--text);
+      background: var(--white);
+      line-height: 1.6;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(255,255,255,0.96);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(28,92,71,0.1);
+      padding: 0 6%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 70px;
+      transition: box-shadow 0.3s;
+    }
+    nav.scrolled { box-shadow: 0 2px 20px rgba(0,0,0,0.08); }
+
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.35rem;
+      color: var(--forest);
+      font-weight: 700;
+      text-decoration: none;
+      letter-spacing: -0.3px;
+    }
+    .nav-logo span { color: var(--gold); }
+
+    .nav-links {
+      display: flex;
+      gap: 2.2rem;
+      list-style: none;
+    }
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text);
+      font-size: 0.88rem;
+      font-weight: 500;
+      letter-spacing: 0.3px;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--forest); }
+
+    .nav-cta {
+      background: var(--forest);
+      color: var(--white) !important;
+      padding: 0.55rem 1.4rem;
+      border-radius: 50px;
+      transition: background 0.2s !important;
+    }
+    .nav-cta:hover { background: var(--forest-dark) !important; color: var(--white) !important; }
+
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+    .hamburger span { display: block; width: 24px; height: 2px; background: var(--text); border-radius: 2px; transition: 0.3s; }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      background: linear-gradient(135deg, var(--forest-dark) 0%, var(--forest) 50%, #2d8a6b 100%);
+      display: flex;
+      align-items: center;
+      padding: 100px 6% 60px;
+      position: relative;
+      overflow: hidden;
+    }
+    #hero::before {
+      content: '';
+      position: absolute;
+      top: -200px; right: -200px;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(184,149,74,0.15) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+    #hero::after {
+      content: '';
+      position: absolute;
+      bottom: -150px; left: -100px;
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+
+    .hero-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 420px;
+      gap: 5rem;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(184,149,74,0.2);
+      border: 1px solid rgba(184,149,74,0.4);
+      color: var(--gold-light);
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 0.4rem 1rem;
+      border-radius: 50px;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.4rem, 4.5vw, 3.8rem);
+      color: var(--white);
+      line-height: 1.18;
+      margin-bottom: 1rem;
+      font-weight: 700;
+    }
+    .hero-title em {
+      font-style: italic;
+      color: var(--gold-light);
+    }
+
+    .hero-subtitle {
+      color: rgba(255,255,255,0.78);
+      font-size: 1.05rem;
+      line-height: 1.75;
+      margin-bottom: 2rem;
+      max-width: 520px;
+      font-weight: 300;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      background: var(--gold);
+      color: var(--white);
+      padding: 0.85rem 2rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.92rem;
+      transition: background 0.2s, transform 0.2s;
+      display: inline-block;
+    }
+    .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); }
+
+    .btn-outline {
+      border: 2px solid rgba(255,255,255,0.5);
+      color: var(--white);
+      padding: 0.85rem 2rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.92rem;
+      transition: border-color 0.2s, background 0.2s;
+      display: inline-block;
+    }
+    .btn-outline:hover { border-color: var(--white); background: rgba(255,255,255,0.08); }
+
+    .hero-stats {
+      display: flex;
+      gap: 2.5rem;
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(255,255,255,0.15);
+    }
+    .stat-item { }
+    .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--white);
+    }
+    .stat-label {
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.6);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-top: 0.1rem;
+    }
+
+    .hero-photo-wrap {
+      position: relative;
+    }
+    .hero-photo-frame {
+      position: relative;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.35);
+    }
+    .hero-photo-frame img {
+      width: 100%;
+      display: block;
+      filter: brightness(1.05);
+    }
+    .hero-photo-card {
+      position: absolute;
+      bottom: -20px;
+      left: -30px;
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 1rem 1.4rem;
+      box-shadow: var(--shadow-lg);
+      min-width: 180px;
+    }
+    .hero-photo-card .card-label {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .hero-photo-card .card-value {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--forest);
+      margin-top: 0.15rem;
+    }
+    .hero-photo-badge {
+      position: absolute;
+      top: 20px;
+      right: -15px;
+      background: var(--gold);
+      color: var(--white);
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-align: center;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+      line-height: 1.3;
+      box-shadow: 0 4px 16px rgba(184,149,74,0.4);
+    }
+
+    /* ── SECTION COMMON ── */
+    section { padding: 90px 6%; }
+    .section-inner { max-width: 1200px; margin: 0 auto; }
+
+    .section-tag {
+      font-size: 0.78rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--forest);
+      margin-bottom: 0.75rem;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.9rem, 3vw, 2.8rem);
+      font-weight: 700;
+      line-height: 1.25;
+      color: var(--text);
+      margin-bottom: 1rem;
+    }
+    .section-desc {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      line-height: 1.75;
+      max-width: 620px;
+    }
+
+    /* ── ABOUT ── */
+    #about { background: var(--cream); }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+
+    .about-photo {
+      position: relative;
+    }
+    .about-photo-frame {
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+    }
+    .about-photo-frame img {
+      width: 100%;
+      display: block;
+    }
+    .about-accent {
+      position: absolute;
+      top: -20px;
+      left: -20px;
+      width: 120px;
+      height: 120px;
+      border: 3px solid var(--gold);
+      border-radius: 16px;
+      z-index: -1;
+    }
+    .about-accent-2 {
+      position: absolute;
+      bottom: -20px;
+      right: -20px;
+      width: 100px;
+      height: 100px;
+      background: var(--forest);
+      border-radius: 50%;
+      z-index: -1;
+      opacity: 0.15;
+    }
+
+    .about-content .section-title { margin-bottom: 1.2rem; }
+
+    .about-bio {
+      color: var(--text-muted);
+      font-size: 0.97rem;
+      line-height: 1.8;
+      margin-bottom: 1.5rem;
+    }
+
+    .credentials-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+      margin-bottom: 2rem;
+    }
+    .credentials-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      font-size: 0.92rem;
+      color: var(--text);
+    }
+    .credentials-list li::before {
+      content: '';
+      display: inline-block;
+      width: 18px;
+      height: 18px;
+      min-width: 18px;
+      background: var(--forest);
+      border-radius: 50%;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E");
+      background-size: 11px;
+      background-repeat: no-repeat;
+      background-position: center;
+      margin-top: 2px;
+    }
+
+    /* ── SERVICES ── */
+    #services { background: var(--white); }
+
+    .services-header {
+      text-align: center;
+      margin-bottom: 3.5rem;
+    }
+    .services-header .section-desc { margin: 0 auto; }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+    }
+
+    .service-card {
+      background: var(--cream);
+      border-radius: var(--radius);
+      padding: 2rem 1.5rem;
+      transition: transform 0.3s, box-shadow 0.3s;
+      position: relative;
+      overflow: hidden;
+      cursor: default;
+    }
+    .service-card::before {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--forest), var(--gold));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s;
+    }
+    .service-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); }
+    .service-card:hover::before { transform: scaleX(1); }
+
+    .service-icon {
+      width: 52px;
+      height: 52px;
+      background: var(--forest);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.25rem;
+    }
+    .service-icon svg { width: 26px; height: 26px; stroke: var(--white); fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+
+    .service-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 0.75rem;
+    }
+    .service-desc {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+
+    /* ── APPROACH ── */
+    #approach {
+      background: linear-gradient(135deg, var(--forest-dark) 0%, var(--forest) 100%);
+      color: var(--white);
+    }
+    #approach .section-title { color: var(--white); }
+    #approach .section-tag { color: var(--gold-light); }
+
+    .approach-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+
+    .approach-desc {
+      color: rgba(255,255,255,0.8);
+      font-size: 1.02rem;
+      line-height: 1.8;
+      margin-bottom: 2rem;
+    }
+
+    .approach-pillars {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+    .pillar {
+      display: flex;
+      gap: 1.1rem;
+      align-items: flex-start;
+    }
+    .pillar-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--gold);
+      min-width: 36px;
+      line-height: 1;
+    }
+    .pillar-text strong {
+      display: block;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 0.2rem;
+    }
+    .pillar-text span {
+      font-size: 0.86rem;
+      color: rgba(255,255,255,0.65);
+      line-height: 1.6;
+    }
+
+    .approach-quote {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-left: 4px solid var(--gold);
+      border-radius: var(--radius);
+      padding: 2rem;
+    }
+    .approach-quote blockquote {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.35rem;
+      font-style: italic;
+      color: var(--white);
+      line-height: 1.6;
+      margin-bottom: 1.2rem;
+    }
+    .approach-quote cite {
+      font-size: 0.85rem;
+      color: var(--gold-light);
+      font-style: normal;
+      font-weight: 600;
+    }
+
+    /* ── CONDITIONS ── */
+    #conditions { background: var(--cream); }
+
+    .conditions-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+    .conditions-header .section-desc { margin: 0 auto; }
+
+    .conditions-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+    }
+    .condition-item {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 1.2rem 1.4rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 0.91rem;
+      font-weight: 500;
+      color: var(--text);
+      transition: background 0.2s;
+    }
+    .condition-item:hover { background: var(--forest); color: var(--white); }
+    .condition-item::before {
+      content: '✦';
+      color: var(--gold);
+      font-size: 0.7rem;
+    }
+    .condition-item:hover::before { color: var(--gold-light); }
+
+    /* ── TESTIMONIALS ── */
+    #testimonials { background: var(--white); }
+    .testimonials-header { text-align: center; margin-bottom: 3rem; }
+    .testimonials-header .section-desc { margin: 0 auto; }
+
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+    .testimonial-card {
+      background: var(--cream);
+      border-radius: var(--radius);
+      padding: 2rem;
+      position: relative;
+    }
+    .testimonial-card::before {
+      content: '"';
+      font-family: 'Playfair Display', serif;
+      font-size: 5rem;
+      color: var(--forest);
+      opacity: 0.12;
+      position: absolute;
+      top: 0.5rem;
+      left: 1rem;
+      line-height: 1;
+    }
+    .stars {
+      display: flex;
+      gap: 3px;
+      margin-bottom: 1rem;
+    }
+    .stars span { color: var(--gold); font-size: 0.9rem; }
+    .testimonial-text {
+      font-size: 0.92rem;
+      color: var(--text);
+      line-height: 1.75;
+      margin-bottom: 1.4rem;
+      font-style: italic;
+    }
+    .testimonial-author {
+      font-weight: 600;
+      font-size: 0.88rem;
+      color: var(--forest);
+    }
+    .testimonial-detail {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    /* ── CONTACT ── */
+    #contact { background: var(--cream); }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .contact-info .section-title { margin-bottom: 1rem; }
+    .contact-desc {
+      color: var(--text-muted);
+      font-size: 0.97rem;
+      line-height: 1.75;
+      margin-bottom: 2rem;
+    }
+
+    .contact-items {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+    .contact-item {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+    }
+    .contact-item-icon {
+      width: 44px;
+      height: 44px;
+      min-width: 44px;
+      background: var(--forest);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .contact-item-icon svg {
+      width: 20px; height: 20px;
+      stroke: var(--white); fill: none;
+      stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round;
+    }
+    .contact-item-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+    .contact-item-value {
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--text);
+      margin-top: 0.15rem;
+    }
+
+    .contact-form {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 2.5rem;
+      box-shadow: var(--shadow);
+    }
+    .form-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 1.5rem;
+    }
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+    .form-group {
+      margin-bottom: 1.1rem;
+    }
+    .form-group label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 0.4rem;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 1.5px solid var(--cream-dark);
+      border-radius: 8px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.92rem;
+      color: var(--text);
+      background: var(--white);
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: var(--forest);
+    }
+    .form-group textarea { resize: vertical; min-height: 100px; }
+
+    .form-submit {
+      width: 100%;
+      background: var(--forest);
+      color: var(--white);
+      border: none;
+      padding: 0.9rem;
+      border-radius: 50px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+      margin-top: 0.5rem;
+    }
+    .form-submit:hover { background: var(--forest-dark); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--forest-dark);
+      color: rgba(255,255,255,0.7);
+      padding: 3rem 6%;
+    }
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+    }
+    .footer-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      color: var(--white);
+      font-weight: 700;
+    }
+    .footer-logo span { color: var(--gold); }
+    .footer-tagline {
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.5);
+      margin-top: 0.3rem;
+    }
+    .footer-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+      flex-wrap: wrap;
+    }
+    .footer-links a {
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      font-size: 0.85rem;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--white); }
+    .footer-copy {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.35);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1024px) {
+      .services-grid { grid-template-columns: repeat(2, 1fr); }
+      .conditions-grid { grid-template-columns: repeat(2, 1fr); }
+      .testimonials-grid { grid-template-columns: 1fr 1fr; }
+      .testimonials-grid .testimonial-card:last-child { display: none; }
+    }
+
+    @media (max-width: 768px) {
+      .hero-inner { grid-template-columns: 1fr; }
+      .hero-photo-wrap { display: none; }
+      .about-grid { grid-template-columns: 1fr; }
+      .approach-inner { grid-template-columns: 1fr; }
+      .contact-grid { grid-template-columns: 1fr; }
+      .services-grid { grid-template-columns: 1fr; }
+      .conditions-grid { grid-template-columns: 1fr 1fr; }
+      .testimonials-grid { grid-template-columns: 1fr; }
+      .testimonials-grid .testimonial-card:last-child { display: block; }
+      .form-row { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .footer-inner { flex-direction: column; text-align: center; }
+      .footer-links { justify-content: center; }
+      .hero-stats { flex-wrap: wrap; gap: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="navbar">
+    <a href="#hero" class="nav-logo">Elm<span>Remedies</span></a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#approach">Approach</a></li>
+      <li><a href="#conditions">Conditions</a></li>
+      <li><a href="#contact" class="nav-cta">Book Appointment</a></li>
+    </ul>
+    <div class="hamburger" id="hamburger">
+      <span></span><span></span><span></span>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-inner">
+      <div class="hero-content">
+        <div class="hero-badge">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          Integrative Medicine &amp; Holistic Wellness
+        </div>
+        <h1 class="hero-title">
+          Healing the Whole <em>Person,</em><br/>Not Just the Symptom
+        </h1>
+        <p class="hero-subtitle">
+          Blending modern medicine with ancient Ayurvedic wisdom, rehabilitation science, and nutritional therapy to restore your body's natural balance and vitality.
+        </p>
+        <div class="hero-actions">
+          <a href="#contact" class="btn-primary">Book a Consultation</a>
+          <a href="#services" class="btn-outline">Explore Services</a>
+        </div>
+        <div class="hero-stats">
+          <div class="stat-item">
+            <div class="stat-num">15+</div>
+            <div class="stat-label">Years Experience</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-num">2000+</div>
+            <div class="stat-label">Patients Treated</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-num">4</div>
+            <div class="stat-label">Specialties</div>
+          </div>
+        </div>
+      </div>
+      <div class="hero-photo-wrap">
+        <div class="hero-photo-frame">
+          <img src="images/doctor-formal.png" alt="Dr. — Elm Remedies" />
+        </div>
+        <div class="hero-photo-card">
+          <div class="card-label">Specialist in</div>
+          <div class="card-value">Integrative Medicine</div>
+        </div>
+        <div class="hero-photo-badge">
+          Board<br/>Certified<br/>MD
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="section-inner">
+      <div class="about-grid">
+        <div class="about-photo">
+          <div class="about-accent"></div>
+          <div class="about-photo-frame">
+            <img src="images/doctor-casual.png" alt="Dr. — Elm Remedies" />
+          </div>
+          <div class="about-accent-2"></div>
+        </div>
+        <div class="about-content">
+          <div class="section-tag">About the Doctor</div>
+          <h2 class="section-title">A Physician Committed to<br/>Whole-Person Healing</h2>
+          <p class="about-bio">
+            With over 15 years of clinical experience, Dr. [Name] brings a deeply personalised, evidence-based approach to medicine. Trained in both conventional rehabilitation medicine and classical Ayurveda, he bridges the gap between East and West — offering patients a comprehensive path to lasting wellness.
+          </p>
+          <p class="about-bio">
+            His practice, Elm Remedies, was founded on a simple belief: true healing happens when we address the body, mind, and spirit together. Every consultation is an opportunity to uncover the root cause of illness — not merely suppress its symptoms.
+          </p>
+          <ul class="credentials-list">
+            <li>MBBS — Bachelor of Medicine & Surgery</li>
+            <li>MD — Rehabilitation Medicine</li>
+            <li>Diploma in Ayurvedic Medicine & Nutrition</li>
+            <li>Certified Integrative Medicine Practitioner</li>
+            <li>Member, British Society of Lifestyle Medicine</li>
+          </ul>
+          <a href="#contact" class="btn-primary" style="background: var(--forest);">Schedule a Consultation</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services">
+    <div class="section-inner">
+      <div class="services-header">
+        <div class="section-tag">What We Offer</div>
+        <h2 class="section-title">Specialised Areas of Practice</h2>
+        <p class="section-desc">Each service draws on multiple disciplines to deliver a truly integrative, patient-centred experience.</p>
+      </div>
+      <div class="services-grid">
+
+        <div class="service-card">
+          <div class="service-icon">
+            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/><path d="M8 12h8M12 8v8"/></svg>
+          </div>
+          <h3 class="service-title">Ayurvedic Medicine</h3>
+          <p class="service-desc">Drawing on 5,000 years of Vedic science, treatments are tailored to your unique constitution (Prakriti) to restore doshic balance through herbs, diet, and lifestyle.</p>
+        </div>
+
+        <div class="service-card">
+          <div class="service-icon">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+          </div>
+          <h3 class="service-title">Nutrition Therapy</h3>
+          <p class="service-desc">Evidence-based nutritional assessment and personalised meal planning to address chronic conditions, weight management, metabolic health, and energy restoration.</p>
+        </div>
+
+        <div class="service-card">
+          <div class="service-icon">
+            <svg viewBox="0 0 24 24"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M9 14l2 2 4-4"/></svg>
+          </div>
+          <h3 class="service-title">Rehabilitation Medicine</h3>
+          <p class="service-desc">Comprehensive rehabilitation programmes for musculoskeletal injuries, neurological conditions, post-surgical recovery, and chronic pain management.</p>
+        </div>
+
+        <div class="service-card">
+          <div class="service-icon">
+            <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          </div>
+          <h3 class="service-title">Health &amp; Wellness</h3>
+          <p class="service-desc">Preventive health assessments, stress management, sleep optimisation, and personalised lifestyle medicine programmes to help you thrive long-term.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- APPROACH -->
+  <section id="approach">
+    <div class="section-inner">
+      <div class="approach-inner">
+        <div class="approach-left">
+          <div class="section-tag">My Philosophy</div>
+          <h2 class="section-title">The Integrative Approach</h2>
+          <p class="approach-desc">
+            Integrative medicine isn't about choosing between conventional and alternative — it's about using the best of both worlds. Every patient receives a care plan that considers their full story: genetics, lifestyle, environment, and spirit.
+          </p>
+          <div class="approach-pillars">
+            <div class="pillar">
+              <div class="pillar-num">01</div>
+              <div class="pillar-text">
+                <strong>Root-Cause Analysis</strong>
+                <span>We investigate why illness occurs, not just what to call it.</span>
+              </div>
+            </div>
+            <div class="pillar">
+              <div class="pillar-num">02</div>
+              <div class="pillar-text">
+                <strong>Personalised Protocols</strong>
+                <span>No two patients are the same — your treatment plan won't be either.</span>
+              </div>
+            </div>
+            <div class="pillar">
+              <div class="pillar-num">03</div>
+              <div class="pillar-text">
+                <strong>Mind-Body Connection</strong>
+                <span>Mental and emotional wellbeing are inseparable from physical health.</span>
+              </div>
+            </div>
+            <div class="pillar">
+              <div class="pillar-num">04</div>
+              <div class="pillar-text">
+                <strong>Evidence + Tradition</strong>
+                <span>Modern science validates what ancient healers discovered millennia ago.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="approach-right">
+          <div class="approach-quote">
+            <blockquote>
+              "The natural healing force within each one of us is the greatest force in getting well. Let food be thy medicine and medicine be thy food."
+            </blockquote>
+            <cite>— Hippocrates, Father of Medicine</cite>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONDITIONS -->
+  <section id="conditions">
+    <div class="section-inner">
+      <div class="conditions-header">
+        <div class="section-tag">Conditions Treated</div>
+        <h2 class="section-title">What We Can Help With</h2>
+        <p class="section-desc">From chronic illness to performance optimisation, the practice addresses a wide spectrum of health concerns.</p>
+      </div>
+      <div class="conditions-grid">
+        <div class="condition-item">Chronic Fatigue & Low Energy</div>
+        <div class="condition-item">Digestive Disorders (IBS, GERD)</div>
+        <div class="condition-item">Back & Neck Pain</div>
+        <div class="condition-item">Anxiety & Stress-Related Illness</div>
+        <div class="condition-item">Metabolic Syndrome & Obesity</div>
+        <div class="condition-item">Thyroid Dysfunction</div>
+        <div class="condition-item">Arthritis & Joint Conditions</div>
+        <div class="condition-item">Post-Surgical Rehabilitation</div>
+        <div class="condition-item">Neurological Rehabilitation</div>
+        <div class="condition-item">Hormonal Imbalance</div>
+        <div class="condition-item">Sleep Disorders</div>
+        <div class="condition-item">Skin Conditions (Eczema, Psoriasis)</div>
+        <div class="condition-item">Autoimmune Conditions</div>
+        <div class="condition-item">Sports Injuries</div>
+        <div class="condition-item">Preventive Health & Longevity</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section id="testimonials">
+    <div class="section-inner">
+      <div class="testimonials-header">
+        <div class="section-tag">Patient Stories</div>
+        <h2 class="section-title">What Patients Say</h2>
+        <p class="section-desc">Real experiences from patients who found a new path to health through integrative medicine.</p>
+      </div>
+      <div class="testimonials-grid">
+        <div class="testimonial-card">
+          <div class="stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+          <p class="testimonial-text">"After years of chasing symptoms with different specialists, Dr. [Name] was the first to look at the whole picture. Within three months my energy levels and digestion transformed completely. I feel like myself again."</p>
+          <div class="testimonial-author">Sarah M.</div>
+          <div class="testimonial-detail">Chronic Fatigue & Digestive Issues</div>
+        </div>
+        <div class="testimonial-card">
+          <div class="stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+          <p class="testimonial-text">"The rehabilitation programme after my disc surgery was exceptional. Not just physical recovery — the Ayurvedic approach to inflammation made a remarkable difference. Highly recommended."</p>
+          <div class="testimonial-author">James T.</div>
+          <div class="testimonial-detail">Post-Surgical Spinal Rehabilitation</div>
+        </div>
+        <div class="testimonial-card">
+          <div class="stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+          <p class="testimonial-text">"I came in with severe eczema and anxiety. The nutritional overhaul combined with stress management techniques cleared my skin within 8 weeks. I wish I'd found this practice sooner."</p>
+          <div class="testimonial-author">Priya K.</div>
+          <div class="testimonial-detail">Skin & Anxiety Management</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="section-inner">
+      <div class="contact-grid">
+        <div class="contact-info">
+          <div class="section-tag">Get in Touch</div>
+          <h2 class="section-title">Book Your Consultation</h2>
+          <p class="contact-desc">
+            Ready to begin your journey to whole-person health? Get in touch to schedule an initial consultation. In-person and virtual appointments are available.
+          </p>
+          <div class="contact-items">
+            <div class="contact-item">
+              <div class="contact-item-icon">
+                <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.27h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.91a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16.92z"/></svg>
+              </div>
+              <div>
+                <div class="contact-item-label">Phone</div>
+                <div class="contact-item-value">+44 (0) 000 000 0000</div>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-item-icon">
+                <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              </div>
+              <div>
+                <div class="contact-item-label">Email</div>
+                <div class="contact-item-value">info@elmremedies.com</div>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-item-icon">
+                <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              </div>
+              <div>
+                <div class="contact-item-label">Location</div>
+                <div class="contact-item-value">London, United Kingdom<br/>Virtual appointments available worldwide</div>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-item-icon">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              </div>
+              <div>
+                <div class="contact-item-label">Hours</div>
+                <div class="contact-item-value">Mon – Fri: 9am – 6pm<br/>Sat: 9am – 1pm</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="contact-form">
+          <div class="form-title">Request an Appointment</div>
+          <form id="appointment-form">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="first-name">First Name</label>
+                <input type="text" id="first-name" placeholder="John" required />
+              </div>
+              <div class="form-group">
+                <label for="last-name">Last Name</label>
+                <input type="text" id="last-name" placeholder="Smith" required />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="email">Email Address</label>
+              <input type="email" id="email" placeholder="john@example.com" required />
+            </div>
+            <div class="form-group">
+              <label for="phone">Phone Number</label>
+              <input type="tel" id="phone" placeholder="+44 000 000 0000" />
+            </div>
+            <div class="form-group">
+              <label for="service">Area of Interest</label>
+              <select id="service">
+                <option value="">— Select a service —</option>
+                <option>Ayurvedic Medicine</option>
+                <option>Nutrition Therapy</option>
+                <option>Rehabilitation Medicine</option>
+                <option>Integrative Health Consultation</option>
+                <option>Health &amp; Wellness Programme</option>
+                <option>Other / Not sure yet</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="message">Tell us about your health concerns</label>
+              <textarea id="message" placeholder="Please briefly describe your main health concerns or what you'd like to address..."></textarea>
+            </div>
+            <button type="submit" class="form-submit">Send Appointment Request →</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div>
+        <div class="footer-logo">Elm<span>Remedies</span></div>
+        <div class="footer-tagline">Integrative Medicine · Ayurveda · Nutrition · Rehabilitation</div>
+      </div>
+      <ul class="footer-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#approach">Approach</a></li>
+        <li><a href="#conditions">Conditions</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <div class="footer-copy">© 2026 Elm Remedies. All rights reserved.</div>
+    </div>
+  </footer>
+
+  <script>
+    // Nav scroll effect
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 20);
+    });
+
+    // Smooth form submit
+    document.getElementById('appointment-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const btn = this.querySelector('.form-submit');
+      btn.textContent = 'Request Sent ✓';
+      btn.style.background = '#2a7a5e';
+      btn.disabled = true;
+    });
+
+    // Hamburger menu (mobile)
+    document.getElementById('hamburger').addEventListener('click', function() {
+      const links = document.querySelector('.nav-links');
+      links.style.display = links.style.display === 'flex' ? 'none' : 'flex';
+      links.style.flexDirection = 'column';
+      links.style.position = 'absolute';
+      links.style.top = '70px';
+      links.style.left = '0';
+      links.style.right = '0';
+      links.style.background = '#fff';
+      links.style.padding = '1.5rem 6%';
+      links.style.borderBottom = '1px solid #eee';
+      links.style.gap = '1rem';
+    });
+  </script>
+</body>
+</html>
