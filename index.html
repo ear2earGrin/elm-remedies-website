@@ -462,6 +462,63 @@
     }
     .form-submit:hover { background: var(--forest-dark); transform: translateY(-1px); }
 
+    /* ── FOOD BANNER ── */
+    #food-banner {
+      position: relative;
+      height: 480px;
+      background-image: url('images/food-hero.jpg');
+      background-size: cover;
+      background-position: center 40%;
+      background-attachment: fixed;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    #food-banner::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(
+        135deg,
+        rgba(20, 61, 47, 0.72) 0%,
+        rgba(28, 92, 71, 0.5) 50%,
+        rgba(20, 61, 47, 0.68) 100%
+      );
+    }
+    .food-banner-content {
+      position: relative; z-index: 1;
+      text-align: center;
+      padding: 0 6%;
+      max-width: 760px;
+    }
+    .food-banner-tag {
+      font-size: 0.72rem; font-weight: 600; letter-spacing: 2.5px;
+      text-transform: uppercase; color: var(--gold-light);
+      margin-bottom: 1rem; display: block;
+    }
+    .food-banner-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      color: var(--white); font-weight: 700;
+      line-height: 1.2; margin-bottom: 1.2rem;
+    }
+    .food-banner-title em { font-style: italic; color: var(--gold-light); }
+    .food-banner-desc {
+      font-size: 1.05rem; color: rgba(255,255,255,0.82);
+      line-height: 1.75; font-weight: 300;
+    }
+
+    /* ── NAV LOGO with symbol ── */
+    .nav-logo-wrap {
+      display: flex; align-items: center; gap: 0.5rem;
+      text-decoration: none;
+    }
+    .nav-logo-symbol {
+      height: 36px; width: auto;
+      opacity: 0.88;
+      filter: brightness(0) saturate(100%) invert(27%) sepia(40%) saturate(600%) hue-rotate(115deg) brightness(90%);
+    }
+
     /* ── FIVE ELEMENTS STRIP ── */
     #elements {
       background: var(--white);
@@ -574,7 +631,10 @@
 
   <!-- NAV -->
   <nav id="navbar">
-    <a href="#hero" class="nav-logo">Elemental<span> Remedies</span></a>
+    <a href="#hero" class="nav-logo-wrap">
+      <img src="images/logo-symbol.png" alt="" class="nav-logo-symbol" />
+      <span class="nav-logo">Elemental<span> Remedies</span></span>
+    </a>
     <ul class="nav-links">
       <li><a href="#about">About</a></li>
       <li><a href="#services">Services</a></li>
@@ -697,6 +757,15 @@
       </div>
     </div>
   </section>
+
+  <!-- FOOD BANNER -->
+  <div id="food-banner">
+    <div class="food-banner-content reveal">
+      <span class="food-banner-tag">Nutrition as Medicine</span>
+      <h2 class="food-banner-title">Let Food Be Thy <em>Medicine,</em><br/>And Medicine Be Thy Food</h2>
+      <p class="food-banner-desc">Every meal is an opportunity to heal. Dr. Bhullar's integrative approach treats food not as fuel, but as the most powerful medicine available to us.</p>
+    </div>
+  </div>
 
   <!-- SERVICES -->
   <section id="services">
