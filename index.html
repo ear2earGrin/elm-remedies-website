@@ -147,51 +147,98 @@
     .stat-num { font-family: 'Playfair Display', serif; font-size: 2.1rem; font-weight: 700; color: var(--white); line-height: 1; }
     .stat-label { font-size: 0.75rem; color: rgba(255,255,255,0.55); text-transform: uppercase; letter-spacing: 0.6px; margin-top: 0.25rem; }
 
-    /* ── HERO PHOTO — improved framing ── */
-    .hero-photo-wrap { position: relative; }
+    /* ── HERO PHOTO PANEL ── */
+    .hero-photo-wrap {
+      position: relative;
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 32px 80px rgba(0,0,0,0.45);
+      min-height: 560px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding-top: 2.5rem;
+    }
 
-    /* Green accent block behind photo */
+    /* Food photo fills the panel background */
+    .hero-food-bg {
+      position: absolute; inset: 0;
+      background: url('images/food-hero.jpg') center 55% / cover no-repeat;
+      z-index: 0;
+    }
+    /* Gradient: green at top reveals food at the bottom */
+    .hero-food-bg::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(20,61,47,0.92) 0%,
+        rgba(28,92,71,0.75) 45%,
+        rgba(20,61,47,0.45) 100%
+      );
+    }
+
+    /* Gold border frame around panel */
     .hero-photo-wrap::before {
       content: '';
-      position: absolute;
-      top: 24px; left: -16px;
-      width: 100%; height: 100%;
-      background: rgba(255,255,255,0.07);
-      border: 2px solid rgba(184,149,74,0.35);
-      border-radius: 22px;
+      position: absolute; inset: 0;
+      border: 1.5px solid rgba(184,149,74,0.3);
+      border-radius: 24px;
+      z-index: 3; pointer-events: none;
     }
 
     .hero-photo-frame {
-      position: relative;
-      border-radius: 20px;
-      overflow: hidden;
-      box-shadow: 0 30px 80px rgba(0,0,0,0.4);
+      position: relative; z-index: 2;
+      border-radius: 16px; overflow: hidden;
+      box-shadow: 0 16px 48px rgba(0,0,0,0.45);
+      width: 82%;
       background: var(--white);
     }
-    .hero-photo-frame img {
-      width: 100%; display: block;
+    .hero-photo-frame img { width: 100%; display: block; }
+
+    /* Food label at the bottom of the panel */
+    .hero-food-label {
+      position: absolute; bottom: 0; left: 0; right: 0; z-index: 2;
+      padding: 1.4rem 1.6rem;
+      text-align: center;
+    }
+    .hero-food-label-text {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 0.95rem;
+      color: rgba(255,255,255,0.9);
+      line-height: 1.5;
+    }
+    .hero-food-label-sub {
+      font-size: 0.7rem;
+      color: var(--gold-light);
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      margin-top: 0.3rem;
+      font-weight: 600;
     }
 
     /* Floating info card */
     .hero-photo-card {
-      position: absolute; bottom: -18px; left: -28px;
+      position: absolute; bottom: 88px; left: -24px;
       background: var(--white); border-radius: var(--radius);
-      padding: 0.9rem 1.3rem;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.15);
-      min-width: 175px; z-index: 2;
+      padding: 0.85rem 1.2rem;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+      min-width: 170px; z-index: 4;
     }
-    .hero-photo-card .card-label { font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.6px; }
-    .hero-photo-card .card-value { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 600; color: var(--forest); margin-top: 0.15rem; }
+    .hero-photo-card .card-label { font-size: 0.68rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.6px; }
+    .hero-photo-card .card-value { font-family: 'Playfair Display', serif; font-size: 0.98rem; font-weight: 600; color: var(--forest); margin-top: 0.12rem; }
 
     /* Gold badge */
     .hero-photo-badge {
-      position: absolute; top: 18px; right: -14px;
+      position: absolute; top: 16px; right: -12px;
       background: linear-gradient(135deg, var(--gold), var(--gold-light));
-      color: var(--white); width: 70px; height: 70px; border-radius: 50%;
+      color: var(--white); width: 68px; height: 68px; border-radius: 50%;
       display: flex; flex-direction: column; align-items: center; justify-content: center;
-      font-size: 0.62rem; font-weight: 700; text-align: center;
+      font-size: 0.6rem; font-weight: 700; text-align: center;
       text-transform: uppercase; letter-spacing: 0.4px; line-height: 1.35;
-      box-shadow: 0 4px 18px rgba(184,149,74,0.5); z-index: 2;
+      box-shadow: 0 4px 18px rgba(184,149,74,0.5); z-index: 4;
     }
 
     /* ── SECTION COMMON ── */
@@ -682,8 +729,13 @@
       </div>
 
       <div class="hero-photo-wrap reveal-right">
+        <div class="hero-food-bg"></div>
         <div class="hero-photo-frame">
           <img src="images/doctor-formal.png" alt="Dr. Vikram Bhullar — Elemental Remedies" />
+        </div>
+        <div class="hero-food-label">
+          <div class="hero-food-label-text">"Let food be thy medicine"</div>
+          <div class="hero-food-label-sub">Nutrition · Ayurveda · Wellness</div>
         </div>
         <div class="hero-photo-card">
           <div class="card-label">Specialist in</div>
